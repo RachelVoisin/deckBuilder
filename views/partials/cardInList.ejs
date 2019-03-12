@@ -1,0 +1,38 @@
+<div class="container">
+	<span class="cardIcon">
+		<% deck.cardsCut.forEach(function(cut){ %>
+			<% if(cut.name === card.name){ %>
+				<i class="orange cut icon"></i>
+			<% } %>
+		<% }); %>
+	</span>
+	<div class="tooltip-container">
+		<span class="cardName" <% if(currentUser && deck.author.id.equals(currentUser._id)){ %>onClick="toggleForms('<%= card._id %>');"<% } %>>
+			<%= card.name %>
+		</span>
+		<span class="img-tooltip">
+			<img src="<%= card.image %>" alt="<%= card.name %> image" />
+		</span>
+							
+		<div class="card-forms" id="forms_<%= card._id %>">
+			<div class="form-container">
+				<img src="<%= card.image %>" alt="<%= card.name %> image" />
+				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>?_method=DELETE" method="POST">
+					<button class="ui red icon button"><i class="trash alternate icon"></i></button>
+				</form>
+				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>/buy?_method=PUT" method="POST">
+					<button class="ui green icon button"><i class="shopping cart icon"></i></button>
+				</form>
+				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>/wishlist?_method=PUT" method="POST">
+					<button class="ui yellow icon button"><i class="star icon"></i></button>
+				</form>
+				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>/cut?_method=PUT" method="POST">
+					<button class="ui orange icon button"><i class="cut icon"></i></button>
+				</form>
+				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>/own?_method=PUT" method="POST">
+					<button class="ui icon button"><i class="check circle outline icon"></i></button>
+				</form>
+			</div>
+		</div>					
+	</div>
+</div>

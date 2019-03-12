@@ -1,0 +1,51 @@
+<% include ../partials/header %>
+
+<h2>MTG Deck Editor</h2>
+<% if(currentUser){ %>
+	<a href="/mtg/new" class="ui teal animated button">
+		<div class="visible content">New Deck</div>
+		<div class="hidden content">
+			<i class="star icon"></i>
+		</div>	
+	</a>	
+<% } %>
+
+<div class="ui divider"></div>
+
+<div class="ui right aligned basic segment">
+	<div class="ui buttons right align">
+	  <div class="ui grey basic button">Order by:</div>
+	  <div class="ui teal basic button">author</div>
+	  <div class="ui teal basic button">alphabetical</div>
+	</div>
+</div>
+<!-- is this going to do anything??? -->
+
+<div class="ui basic segment">
+	<div class="ui three column grid">
+		<% decks.forEach(function(deck){%>
+			<div class="column">
+				<div class="ui cards">
+					<a class="<%= deck.color %> card" href="/mtg/<%= deck._id %>">
+						<div class="content">
+							<div class="right floated meta"><%= deck.dateUpdated %></div>
+							<img class="ui avatar image" src="/avatar.png"> <%= deck.author.username %>
+						</div>
+						<div class="image">
+							<img src="<%= deck.image %>" alt="<%= deck.name %> Image">
+						</div>
+						<div class="extra content">
+							<div class="ui header center">
+								<%= deck.name %>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+</div>
+
+
+
+<% include ../partials/footer %>

@@ -1,0 +1,147 @@
+<% include ../../partials/header %>
+
+<div class="ui items">
+	<div class="item">
+		<div class="image">
+			<img src="<%= card.image %>" alt="<%= card.name %> image">
+		</div>
+		<div class="content">
+			<div class="header">
+				<h2 class="ui header"><%= card.name %></h2>
+			</div>
+			<div class="meta">
+				Edit status in deck: <%= deck.name %> 
+				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>?_method=DELETE" method="POST">
+					<button class="tiny ui red button">
+					<i class="trash alternate icon"></i> Remove Card from Deck
+					</button>
+				</form>
+			</div>
+			<div class="description">
+				<div class="ui basic segment">
+					<h3 class="ui header">Current status: <%= status %></h3>
+					<form class="ui form" action="/mtg/<%= deck._id %>/<%= card._id %>?_method=PUT" method="POST">
+						<div class="fields">
+							<div class="one wide field top-pad">
+								<div class="ui radio checkbox <% if(status != "Wishlist"){ %>
+								faded
+								<% } %>
+								" id="wishlist">
+									<div class="ui header">
+										<i class="yellow star icon">
+											<input type="radio" name="status" value="wishlist" onClick="changeClass(this);"
+											<% if(status === "Wishlist"){ %>
+											checked
+											<% } %>
+											>
+										</i>
+									</div>
+								</div>
+							</div>
+							<div class="one wide field top-pad">
+								<div class="ui radio checkbox <% if(status != "To Buy"){ %>
+								faded
+								<% } %>
+								" id="buy">	
+									<div class="ui header">
+										<i class="green shopping cart icon">
+											<input type="radio" name="status" value="buy" onClick="changeClass(this);"
+											<% if(status === "To Buy"){ %>
+											checked
+											<% } %>
+											>
+										</i>
+									</div>
+								</div>
+							</div>
+							<div class="one wide field top-pad">
+								<div class="ui radio checkbox <% if(status != "Possible Cut"){ %>
+								faded
+								<% } %>
+								" id="cut">
+									<div class="ui header">
+										<i class="orange cut icon">
+											<input type="radio" name="status" value="cut" onClick="changeClass(this);"
+											<% if(status === "Possible Cut"){ %>
+											checked
+											<% } %>
+											>
+										</i>
+									</div>
+								</div>
+							</div>
+							<div class="one wide field top-pad">
+								<div class="ui radio checkbox <% if(status != "Owned"){ %>
+								faded
+								<% } %>
+								" id="owned">
+									<div class="ui header">
+										<i class="check circle outline icon">
+											<input type="radio" name="status" value="owned" onClick="changeClass(this);"
+											<% if(status === "Owned"){ %>
+											checked
+											<% } %>
+											>
+										</i>
+									</div>
+								</div>
+							</div>
+							<div class="three wide field">
+								<button type="submit" class="tiny ui teal button">Update Card Status</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<a href="/mtg/<%= deck._id %>">Back to Deck</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="ui <%= deck.color %> segment">
+	<table class="ui very basic table">
+		<tr>
+			<th>Key</th>
+		</tr>
+		<tr>
+			<td><i class="yellow star icon"></i> Wishlist</td>
+			<td><i class="green shopping cart icon"></i> To Buy</td>
+			<td><i class="orange cut icon"></i> Possible Cut</td>
+			<td><i class="check circle outline icon"></i>Owned</td>
+		</tr>
+	</table>
+</div>
+
+
+<script>
+	function changeClass(btn){
+		var wishlist = document.getElementById("wishlist");
+		var buy = document.getElementById("buy");
+		var cut = document.getElementById("cut");
+		var owned = document.getElementById("owned");
+		
+		if(btn.value === "wishlist"){
+			wishlist.classList.toggle("faded");
+			buy.classList.add("faded");
+			cut.classList.add("faded");
+			owned.classList.add("faded");
+		} else if(btn.value === "buy"){
+			buy.classList.toggle("faded");
+			cut.classList.add("faded");
+			wishlist.classList.add("faded");
+			owned.classList.add("faded");
+		} else if(btn.value === "cut"){
+			cut.classList.toggle("faded");
+			wishlist.classList.add("faded");
+			buy.classList.add("faded");
+			owned.classList.add("faded");
+		} else if(btn.value === "owned"){
+			owned.classList.toggle("faded");
+			wishlist.classList.add("faded");
+			buy.classList.add("faded");
+			cut.classList.add("faded");
+		} 
+	}
+</script>
+
+<% include ../../partials/footer %>

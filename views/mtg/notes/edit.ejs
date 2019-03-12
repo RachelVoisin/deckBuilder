@@ -1,0 +1,40 @@
+<% include ../../partials/header %>
+
+<div class="ui items">
+	<div class="item">
+		<div class="image">
+			<img src="<%= deck.image %>">
+		</div>
+		<div class="content">
+			<h2 class="header"><%= deck.name %></h2>
+			<div class="meta">
+				<img class="ui avatar image" src="https://cdn.iconscout.com/public/images/icon/free/png-512/avatar-user-boy-389cd1eb1d503149-512x512.png">
+				<span><%= deck.author.username %></span>
+				<p>Last updated: <%= deck.dateUpdated %></p>
+			</div>
+			<a href="/mtg/<%= deck._id %>">Back to Deck</a>
+		</div>
+	</div>
+</div>
+
+<div class="ui divider"></div>
+
+<div class="ui basic segment">
+	<h3 class="ui header">My Notes:</h3>
+	<form class="ui form" action="/mtg/<%= deck._id %>/note?_method=PUT" method="POST" autocomplete="off">
+		<div class="field">
+			<textarea id="textarea" name="text"></textarea>
+		</div>
+		<p>Please use <strong>&lt;br&gt;</strong> for line breaks.</p>
+		<button class="ui <%= deck.color %> button">Submit</button>
+	</form>
+</div>
+
+<script>
+	var text = <%- JSON.stringify(deck.note) %>;
+	document.getElementById("textarea").value = text;
+</script>
+
+<% include ../../partials/cardList %>
+
+<% include ../../partials/footer %>

@@ -1,0 +1,42 @@
+<% include ../partials/header %>
+
+<h2>New Deck</h2>
+
+<div class="ui segment">
+	<form class="ui form" action="/mtg" method="POST">
+		<div class="field">
+			<label>Deck Name</label>
+			<input type="text" name="name" placeholder="name" required autocomplete="off">
+		</div>
+		<div class="field">
+			<label>Image URL</label>
+			<input type="text" name="image" placeholder="image url">
+		</div>
+		<div class="three wide field">
+			<label>Theme Color</label>
+			<div class="ui fluid selection dropdown">
+				<input type="hidden" name="color">
+				<i class="dropdown icon"></i>
+				<div class="default text">Color</div>
+				<div class="menu">
+				<% var colors = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"]; %>
+				<% colors.forEach(function(color){ %>
+					<div class="item" data-value="<%= color %>">
+						<i class="<%= color %> circle icon"></i>
+						<%= color %>
+					</div>
+				<% }); %>
+				</div>
+			</div>
+		</div>
+		<button class="ui teal button" type="submit">Submit</button>
+	</form>
+</div>
+
+<script>
+	$('.ui.dropdown')
+	  .dropdown()
+	;
+</script>
+
+<% include ../partials/footer %>

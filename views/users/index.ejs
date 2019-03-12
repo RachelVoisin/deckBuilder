@@ -1,0 +1,47 @@
+<% include ../partials/header %>
+
+<h2 class="ui header">Hello, <%= currentUser.username %>!</h2>
+
+<div class="ui divider"></div>
+
+<button class="ui teal button" onClick="toggleForm();">Change your Password</button>
+<br /><br /><br />
+
+<!--
+<form>
+	<div class="ui header">Update your profile image:</div>
+	<input type="file" name="profileImage" />
+	<br /><br />
+	<button class="ui tiny teal basic button">Submit</button>
+</form>
+-->
+<!-- Maybe one day -->
+
+<div class="card-forms" id="card-forms">
+	<div id="passwordForm">
+		<form action="/user/password?_method=PUT" method="POST" class="ui form">
+			<div class="field">
+				<label>New Password:</label>
+				<input type="password" name="password" placeholder="password" />
+				<div class="top-pad"><input type="password" name="password2" placeholder="re-enter password" /></div>
+			</div>
+			<input type="submit" class="ui basic red button" value="Submit" />
+		</form>
+	</div>
+</div>
+
+<script>
+	function toggleForm(id){
+		var modal = document.getElementById("card-forms");
+		modal.style.display = "block";
+	}
+	
+	document.onclick = function(event){
+		var modal = document.getElementById("card-forms");
+		if(event.target == modal){
+			modal.style.display = "none";
+		}
+	}
+</script>	
+
+<% include ../partials/footer %>

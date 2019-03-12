@@ -1,0 +1,119 @@
+<% include ../partials/header %>
+
+<div class="ui items">
+	<div class="item">
+		<div class="image">
+			<img src="<%= deck.image %>">
+		</div>
+		<div class="content">
+			<h2 class="header"><%= deck.name %></h2>
+			<div class="meta">
+				<img class="ui avatar image" src="/avatar.png">
+				<span><%= deck.author.username %></span>
+				<p>Last updated: <%= deck.dateUpdated %></p>
+			</div>
+			<% if(currentUser && deck.author.id.equals(currentUser._id)){ %>
+				<a href="/mtg/<%= deck._id %>/edit" class="ui <%= deck.color %> button">Edit Deck Details</a>
+			<% } %>
+		</div>
+	</div>
+</div>
+
+<% if(currentUser && deck.author.id.equals(currentUser._id)){ %>
+	<div class="ui divider"></div>
+	<div class="ui basic segment">
+		<form class="ui form" action="/mtg/<%= deck._id %>" method="POST" autocomplete="off">
+			<label><h4 class="ui header">Add Card</h4></label>
+			<div class="fields">
+				<div class="seven wide field">
+					<div class="autocomplete">
+						<input id="myInput" type="text" name="name" placeholder="Card Name">
+					</div>
+				</div>
+				<div class="one wide field top-pad">
+					<div class="ui radio checkbox faded" id="wishlist">
+						<div class="ui header">
+							<i class="yellow star icon">
+								<input type="radio" name="status" value="wishlist" onClick="changeClass(this);">
+							</i>
+						</div>
+					</div>
+				</div>
+				<div class="one wide field top-pad">
+					<div class="ui radio checkbox faded" id="buy">
+						<div class="ui header">							
+							<i class="green shopping cart icon">
+								<input type="radio" name="status" value="buy" onClick="changeClass(this);">
+							</i>
+						</div>
+					</div>
+				</div>
+				<div class="one wide field top-pad">
+					<div class="ui radio checkbox faded" id="cut">
+						<div class="ui header">
+							<i class="orange cut icon">
+								<input type="radio" name="status" value="cut" onClick="changeClass(this);">
+							</i>
+						</div>
+					</div>
+				</div>
+				<div class="three wide field">
+					<button class="ui teal button" type="submit">Add Card</button>
+				</div>
+			</div>		
+		</form>
+	</div>
+<% } %>
+
+<% include ../partials/cardList %>
+
+<% if((!deck.note || deck.note.length === 0) && currentUser && deck.author.id.equals(currentUser._id)){ %>
+	<a href="/mtg/<%= deck._id %>/note"><i class="plus icon"></i>Add a Note</a>
+<% } %>
+
+<% if(deck.note && deck.note.length > 0){ %>
+	<div class="ui <%= deck.color %> segment">
+		<div class="ui header">Notes:</div>
+		<p id="textarea"></p>
+		<% if(currentUser && deck.author.id.equals(currentUser._id)){ %>
+			<a href="/mtg/<%= deck._id %>/note">Edit</a>
+		<% } %>
+	</div>
+<% } %>
+
+<script src="/scripts/autocomplete.js"></script>
+<script src="/scripts/cardsList.js"></script>
+
+<script>
+	autocomplete(document.getElementById("myInput"), cardsList);
+	//put ajax here
+</script>
+
+<script>
+	function changeClass(btn){
+		var wishlist = document.getElementById("wishlist");
+		var buy = document.getElementById("buy");
+		var cut = document.getElementById("cut");
+		
+		if(btn.value === "wishlist"){
+			wishlist.classList.toggle("faded");
+			buy.classList.add("faded");
+			cut.classList.add("faded");
+		} else if(btn.value === "buy"){
+			buy.classList.toggle("faded");
+			cut.classList.add("faded");
+			wishlist.classList.add("faded");
+		} else if(btn.value === "cut"){
+			cut.classList.toggle("faded");
+			wishlist.classList.add("faded");
+			buy.classList.add("faded");
+		}
+	}
+</script>
+
+<script>
+	var text = <%- JSON.stringify(deck.note) %>;
+	document.getElementById("textarea").innerHTML = text;
+</script>
+
+<% include ../partials/footer %>

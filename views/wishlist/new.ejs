@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+<h2>I wish for . . .</h2>
+
+<div class="ui segment">
+	<form class="ui form" action="/wishlist" method="POST">
+		<div class="field">
+			<label>Item</label>
+			<input type="text" name="name" placeholder="item" required autocomplete="off">
+		</div>
+		<div class="field">
+			<label>Description</label>
+			<input type="text" name="description" placeholder="description" autocomplete="off">
+		</div>
+		<div class="field">
+			<label>Image URL</label>
+			<input type="text" name="image" placeholder="image url">
+		</div>
+		<div class="field">
+			<label>Link</label>
+			<input type="text" name="link" placeholder="link">
+		</div>
+		<button class="ui teal button" type="submit">Submit</button>
+	</form>
+</div>
+
+<% include ../partials/footer %>

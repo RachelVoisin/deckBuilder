@@ -1,0 +1,77 @@
+<% include ../partials/header %>
+
+<div class="ui items">
+	<div class="item">
+		<div class="image">
+			<img src="<%= deck.image %>">
+		</div>
+		<div class="content">
+			<form class="ui form" action="/mtg/<%= deck._id %>?_method=PUT" method="POST">
+				<div class="field">
+					<label>Deck Name</label>
+					<input type="text" name="deck[name]" value="<%= deck.name %>" required >
+				</div>
+				<div class="field">
+					<label>Image URL</label>
+					<% if(deck.image == "/wireframe.png"){ %>
+						<input type="text" name="deck[image]">
+					<% } else {%>
+						<input type="text" name="deck[image]" value="<%= deck.image %>">
+					<% } %>
+				</div>
+				<div class="five fields">
+					<div class="field">
+						<label>Theme Color</label>
+						<div class="ui fluid selection dropdown">
+							<input type="hidden" name="deck[color]" value="<%= deck.color %>">
+							<i class="dropdown icon"></i>
+							<div class="default text">Color</div>
+							<div class="menu">
+								<% var colors = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"]; %>
+								<% colors.forEach(function(color){ %>
+									<div class="item" data-value="<%= color %>" >
+										<i class="<%= color %> circle icon"></i>
+										<%= color %>
+									</div>
+								<% }); %>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<label id="normal-text">Swamp</label>
+						<input type="number" name="deck[basics][swamp]" value="0" min="0" max="40" required />
+					</div>
+					<div class="field">
+						<label id="normal-text">Mountain</label>
+						<input type="number" name="deck[basics][mountain]" value="0" min="0" max="40" required />
+					</div>
+					<div class="field">
+						<label id="normal-text">Forest</label>
+						<input type="number" name="deck[basics][forest]" value="0" min="0" max="40" required />
+					</div>
+					<div class="field">
+						<label id="normal-text">Plains</label>
+						<input type="number" name="deck[basics][plains]" value="0" min="0" max="40" required />
+					</div>
+					<div class="field">
+						<label id="normal-text">Island</label>
+						<input type="number" name="deck[basics][island]" value="<%= deck.basics.island %>" min="0" max="40" required />
+					</div>
+				</div>
+				<button class="ui red button" type="submit">Submit Changes</button>
+				&nbsp&nbsp&nbsp&nbsp&nbsp <a href="/mtg/<%= deck._id %>">Back to Deck</a>
+			</form>	
+			<!-- DELETE BUTTON?? -->
+		</div>
+	</div>
+</div>
+
+<% include ../partials/cardList %>
+
+<script>
+	$('.ui.dropdown')
+	  .dropdown()
+	;
+</script>
+
+<% include ../partials/footer %>

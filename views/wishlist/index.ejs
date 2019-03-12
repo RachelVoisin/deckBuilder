@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+
+<p>View wishlist and buy list by user.</p>
+
+<% users.forEach(function(user){ %>
+<h2 class="ui teal header"><%= user.username %></h2>
+<div class="top-pad ui segment">
+	<% if(cards.length > 0){ %>
+		<h4 class="ui teal header">Wishlist</h4>
+		<div class="ui grid">
+			<% cards.forEach(function(card){ %>
+				<% if(card.userName === user.username){ %>
+					<div class="four wide column">
+						<div class="tooltip-container">
+							<span class="cardName">
+								<%= card.cardName %>
+							</span>
+							<span class="img-tooltip">
+								<img src="<%= card.cardImage %>" alt="<%= card.cardName %> image" />
+							</span>
+						</div>	
+					</div>
+				<% } %>
+			<% }); %>
+		</div>
+	<% } %>
+	<!-- should be buy list too! -->
+</div>
+<% }); %>
+
+<% include ../partials/footer %>

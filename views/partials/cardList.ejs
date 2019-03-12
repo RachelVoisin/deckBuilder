@@ -1,0 +1,190 @@
+<div class="ui divider"></div>
+
+<div class="ui basic segment">
+	<div class="ui grid">
+	
+		<% if(types[0]) { %>
+		<div class="five wide column">
+			<div class="container">
+				<h4><%= types[0] %> <span id="normal-text">(<%= lengths[0] %>)</span></h4>
+			</div>
+			<% deck.cards.forEach(function(card){ %>
+				<% if(card.type === types[0]){ %>
+					<% include ../partials/cardInList %>
+				<% } %>
+			<% }); %>
+		</div>
+		<% } %>
+		
+		<% if(types[1]) { %>
+		<div class="five wide column">
+			<div class="container">
+				<h4><%= types[1] %> <span id="normal-text">(<%= lengths[1] %>)</span></h4>
+			</div>
+			<% deck.cards.forEach(function(card){ %>
+				<% if(card.type === types[1]){ %>
+					<% include ../partials/cardInList %>
+				<% } %>
+			<% }); %>
+		</div>
+		<% } %>
+		
+		<% if(types[2]){ %>
+		<div class="five wide column">
+			<div class="container">
+				<h4><%= types[2] %> <span id="normal-text">(<%= lengths[2] %>)</span></h4>
+			</div>
+			<% deck.cards.forEach(function(card){ %>
+				<% if(card.type === types[2]){ %>
+					<% include ../partials/cardInList %>
+				<% } %>
+			<% }); %>
+		</div>
+		<% } %>
+		
+		<% if(types[4]){ %>
+		<div class="five wide column">
+			<div class="container">
+				<h4><%= types[4] %> <span id="normal-text">(<%= lengths[4] %>)</span></h4>
+			</div>
+			<% deck.cards.forEach(function(card){ %>
+				<% if(card.type === types[4]){ %>
+					<% include ../partials/cardInList %>
+				<% } %>
+			<% }); %>
+		</div>
+		<% } %>
+		
+		<% if(types[3]){ %>
+		<div class="five wide column">
+			<div class="container">
+				<h4><%= types[3] %> <span id="normal-text">(<%= lengths[3] %>)</span></h4>
+			</div>
+			<% deck.cards.forEach(function(card){ %>
+				<% if(card.type === types[3]){ %>
+					<% include ../partials/cardInList %>
+				<% } %>
+			<% }); %>
+		</div>
+		<% } %>
+		
+		<div class="five wide column">
+			<div class="container">
+				<h4>Lands <span id="normal-text">(<%= deck.cards.length - (lengths[0] || 0) - (lengths[1] || 0) - (lengths[2] || 0) - (lengths[3] || 0) - (lengths[4] || 0) - (lengths[5] || 0) + deck.basics.mountain + deck.basics.swamp + deck.basics.forest + deck.basics.island + deck.basics.plains %>)</span></h4>
+			</div>
+			<% deck.cards.forEach(function(card){ %>
+				<% if(card.type === "Land"){ %>
+					<% include ../partials/cardInList %>
+				<% } %>
+			<% }); %>
+			<% if(deck.basics.swamp > 0){ %>
+				<div class="container">
+					<span class="cardIcon"></span>
+					<div class="tooltip-container">
+						<span>Island (<%= deck.basics.swamp %>)</span>
+						<span class="img-tooltip">
+							<img src="<%= images.swamp %>" alt="card image" />
+						</span>
+					</div>
+				</div>
+			<% } %>
+			<% if(deck.basics.mountain > 0){ %>
+				<div class="container">
+					<span class="cardIcon"></span>
+					<div class="tooltip-container">
+						<span>Mountain (<%= deck.basics.mountain %>)</span>
+						<span class="img-tooltip">
+							<img src="<%= images.mountain %>" alt="card image" />
+						</span>
+					</div>
+				</div>
+			<% } %>
+			<% if(deck.basics.forest > 0){ %>
+				<div class="container">
+					<span class="cardIcon"></span>
+					<div class="tooltip-container">
+						<span>Forest (<%= deck.basics.forest %>)</span>
+						<span class="img-tooltip">
+							<img src="<%= images.forest %>" alt="card image" />
+						</span>
+					</div>
+				</div>
+			<% } %>
+			<% if(deck.basics.plains > 0){ %>
+				<div class="container">
+					<span class="cardIcon"></span>
+					<div class="tooltip-container">
+						<span>Plains (<%= deck.basics.plains %>)</span>
+						<span class="img-tooltip">
+							<img src="<%= images.plains %>" alt="card image" />
+						</span>
+					</div>
+				</div>
+			<% } %>
+			<% if(deck.basics.island > 0){ %>
+				<div class="container">
+					<span class="cardIcon"></span>
+					<div class="tooltip-container">
+						<span>Island (<%= deck.basics.island %>)</span>
+						<span class="img-tooltip">
+							<img src="<%= images.island %>" alt="card image" />
+						</span>
+					</div>
+				</div>
+			<% } %>
+		</div>
+		
+		<% if(types[5]){ %>
+		<div class="five wide column">
+			<div class="container">
+				<h4><%= types[5] %> <span id="normal-text">(<%= lengths[5] %>)</span></h4>
+			</div>
+			<% deck.cards.forEach(function(card){ %>
+				<% if(card.type === types[5]){ %>
+					<% include ../partials/cardInList %>
+				<% } %>
+			<% }); %>
+		</div>
+		<% } %>
+		
+		<div class="sixteen wide column">
+			<h3 class="ui header">Total Cards: <%= deck.cards.length + deck.basics.island + deck.basics.mountain + deck.basics.swamp + deck.basics.forest + deck.basics.plains %></h3>
+		</div>
+	</div>
+</div>
+	
+	<% if(deck.cardsToBuy.length > 0){ %>
+		<div class="ui green segment">
+			<div class="ui header"><i class="green shopping cart icon"></i>Cards to Buy:</div>
+			<% deck.cardsToBuy.forEach(function(card){ %>
+				<% include ../partials/cardInList %>
+			<% }); %>
+		</div>
+	<% } %>
+	
+	<% if(deck.cardsWishlist.length > 0){ %>
+		<div class="ui yellow segment">
+			<div class="ui header"><i class="yellow star icon"></i>Wishlist:</div>
+			<% deck.cardsWishlist.forEach(function(card){ %>
+				<% include ../partials/cardInList %>
+			<% }); %>
+		</div>
+	<% } %>
+	
+<script>
+	function toggleForms(id){
+		var modal = document.getElementById("forms_" + id);
+		modal.style.display = "block";
+	}
+	
+	document.onclick = function(event){
+		var modals = document.getElementsByClassName("card-forms");
+		for(i = 0; i < modals.length; i++){
+			if(event.target == modals[i]){
+				modals[i].style.display = "none";
+			}
+		}
+	}
+</script>	
+
+	
