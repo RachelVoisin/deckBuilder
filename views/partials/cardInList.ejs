@@ -16,7 +16,6 @@
 							
 		<div class="card-forms" id="forms_<%= card._id %>">
 			<div class="form-container">
-				<%= card.scryfallid %>
 				<img src="<%= card.image %>" alt="<%= card.name %> image" />
 				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>?_method=DELETE" method="POST">
 					<button class="ui red icon button"><i class="trash alternate icon"></i></button>

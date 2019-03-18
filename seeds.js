@@ -4,6 +4,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var Card = require("./models/card");
 var Deck = require("./models/deck");
 var User = require("./models/user");
+var CardsArray = require("./models/cardsArray");
 
 function seedDB(){
 	console.log('Now seeding DB...');
@@ -17,6 +18,7 @@ function seedDB(){
 	//removeCards();
 	
 	//updateCards('https://archive.scryfall.com/json/scryfall-oracle-cards.json');
+	//updateCardsArray();
 }
 
 function removeUsers(){
@@ -29,7 +31,6 @@ function removeUsers(){
 		}
 	});
 }
-
 function removeDecks(){
 	Deck.remove({}, function(err){
 		if(err){
@@ -39,7 +40,6 @@ function removeDecks(){
 		}
 	});
 }
-
 function removeCards(){
 	Card.remove({}, function(err){
 		if(err){
@@ -48,8 +48,7 @@ function removeCards(){
 			console.log('removed cards');
 		}
 	});
-}
-	
+}	
 function updateCards(url) {
 	var currentCards = [];
 	Card.find({}, function(err, allCards){
@@ -108,6 +107,57 @@ function updateCards(url) {
 	};
 	request.open('GET', url);
 	request.send();
+}
+function updateCardsArray(){
+	CardsArray.remove({}, function(err){
+		if(err){
+			console.log(err);
+		}
+		else {
+			console.log('removed card array');
+			var data = [];
+			Card.find({}, function(err, allCards){
+				if(err){
+					console.log(err);
+				} else {
+					allCards.forEach(function(card){
+						data.push(card.name);
+					});
+					var newCardsArray = new CardsArray({
+						cards: data
+					});
+					CardsArray.create(newCardsArray, function(err, newlyCreated){
+						if(err){
+							console.log(err);
+						} else {
+							console.log("new array added");
+						}
+					});		
+				}
+			});
+		}
+	});
+	/*
+	let cursor = Card.find({}).cursor();
+	cursor.addCursorFlag("noCursorTimeout", true);
+	
+	cursor.on('data', function(card) {
+		data.push(card.name);
+	});
+	cursor.on('close', function() {
+		cursor.close();
+		var newCardsArray = new CardsArray({
+			cards: data
+		});
+		CardsArray.create(newCardsArray, function(err, newlyCreated){
+			if(err){
+				console.log(err);
+			} else {
+				console.log("new array added");
+			}
+		});		
+	});
+	*/	
 }
 	
 module.exports = seedDB;

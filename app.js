@@ -85,8 +85,8 @@ app.post("/register", function(req, res){
 
 app.post("/login", passport.authenticate("local", 
 	{
-		successRedirect: "/mtg",
-		failureRedirect: "/mtg",
+		successRedirect: "back",
+		failureRedirect: "back",
 		failureFlash: true,
 		successFlash: "Login successful"
 	}), function(req, res){		

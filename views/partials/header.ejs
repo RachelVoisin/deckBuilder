@@ -31,14 +31,14 @@
 
 <div class="ui container">
 
-<div class="ui pointing menu">
+<div class="ui stackable pointing menu">
   <a class="<% if(page === "mtg"){ %> active <% } %> item" href="/mtg">
     Deck Builder
   </a>
   <a class="<% if(page === "wishlist"){ %> active <% } %> item" href="/wishlist">
     Wishlist
   </a>
-  <div class="right menu">
+  <div class="right stackable menu">
     <div class="item">
 		<% if(!currentUser){ %>
 		<form action="/login" method="POST">

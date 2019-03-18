@@ -6,20 +6,32 @@ var numberToWords = require('number-to-words');
 
 var User = require("../models/user"),
     Deck = require("../models/deck"),
-	Card = require("../models/card");
+	Card = require("../models/card"),
+	CardsArray = require("../models/cardsArray");
 
 var middleware = require("../middleware"); // contents of index.js is automatically required if you require a directory
 
 router.get("/autocomplete", function(req, res){
-	Card.find({}, function(err, allCards){
+	
+	/*
+	let cursor = Card.find({}).cursor();
+	cursor.addCursorFlag("noCursorTimeout", true);
+	var data = [];
+	
+	cursor.on('data', function(card) {
+		data.push(card.name);
+	});
+	cursor.on('close', function() {
+		cursor.close();
+		res.send(data);
+	});
+	*/
+
+	CardsArray.findOne({}, function(err, foundArray){
 		if(err){
 			console.log(err);
 		} else {
-			var data = [];
-			allCards.forEach(function(card){
-				data.push(card.name);
-			});
-			res.send(data);
+			res.send(foundArray.cards);
 		}
 	});
 });
