@@ -6,7 +6,7 @@
 <h2 class="ui teal header"><%= user.username %></h2>
 <div class="top-pad ui segment">
 	<% if(cards.length > 0){ %>
-		<h4 class="ui teal header">Wishlist</h4>
+		<h3 class="ui yellow header">Wishlist</h3>
 		<div class="ui grid">
 			<% cards.forEach(function(card){ %>
 				<% if(card.userName === user.username){ %>
@@ -23,8 +23,25 @@
 				<% } %>
 			<% }); %>
 		</div>
+	<% } if(buyCards.length > 0){ %>
+		<h3 class="ui green header">Buy list</h3>
+		<div class="ui grid">
+			<% buyCards.forEach(function(card){ %>
+				<% if(card.userName === user.username){ %>
+					<div class="four wide column">
+						<div class="tooltip-container">
+							<span class="cardName">
+								<%= card.cardName %>
+							</span>
+							<span class="img-tooltip">
+								<img src="<%= card.cardImage %>" alt="<%= card.cardName %> image" />
+							</span>
+						</div>	
+					</div>
+				<% } %>
+			<% }); %>
+		</div>
 	<% } %>
-	<!-- should be buy list too! -->
 </div>
 <% }); %>
 

@@ -16,7 +16,7 @@ var deckSchema = new mongoose.Schema({
 	cards: [{
 				type: mongoose.Schema.Types.ObjectId,
 				ref: "Card"		
-			}],
+			}], // add amount
 	cardsToBuy: [{
 				type: mongoose.Schema.Types.ObjectId,
 				ref: "Card"		

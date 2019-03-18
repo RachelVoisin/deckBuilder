@@ -30,7 +30,8 @@ var mtgRoutes = require("./routes/mtg"),
 
 const PORT = process.env.PORT || 3000
 
-mongoose.connect("mongodb://localhost/juice_app");
+//mongoose.connect("mongodb://localhost/juice_app");
+mongoose.connect("mongodb://deckbuilder:mtg123@ds113648.mlab.com:13648/deckbuilder");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public")); // for a shortcut to the public folder

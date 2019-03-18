@@ -27,7 +27,7 @@
 			<div class="fields">
 				<div class="seven wide field">
 					<div class="autocomplete">
-						<input id="myInput" type="text" name="name" placeholder="Card Name">
+						<input id="cardInput" type="text" name="name" placeholder="Card Name">
 					</div>
 				</div>
 				<div class="one wide field top-pad">
@@ -58,36 +58,71 @@
 					</div>
 				</div>
 				<div class="three wide field">
-					<button class="ui teal button" type="submit">Add Card</button>
+					<button class="ui teal button" type="submit" id="submitBtn">Add Card</button>
 				</div>
 			</div>		
 		</form>
 	</div>
 <% } %>
 
+<div class="ui right aligned basic segment">
+	<div class="ui left labeled button">
+	  <div class="ui basic right pointing label">Sort by:</div>
+	  <a class="ui button" href="/mtg/<%= deck._id %>">Type</a>
+	  <a class="ui button" href="/mtg/<%= deck._id %>/cmc">CMC</a>
+	  <a class="ui button" href="/mtg/<%= deck._id %>/color">Color</a>
+	</div>
+</div>
+
 <% include ../partials/cardList %>
 
-<% if((!deck.note || deck.note.length === 0) && currentUser && deck.author.id.equals(currentUser._id)){ %>
+<% if((!deck.note || deck.note.length == 0) && currentUser && deck.author.id.equals(currentUser._id)){ %>
 	<a href="/mtg/<%= deck._id %>/note"><i class="plus icon"></i>Add a Note</a>
 <% } %>
 
 <% if(deck.note && deck.note.length > 0){ %>
 	<div class="ui <%= deck.color %> segment">
 		<div class="ui header">Notes:</div>
-		<p id="textarea"></p>
+		<p><%= deck.note %></p>
 		<% if(currentUser && deck.author.id.equals(currentUser._id)){ %>
+			<div class="ui divider"></div>
 			<a href="/mtg/<%= deck._id %>/note">Edit</a>
 		<% } %>
 	</div>
 <% } %>
 
-<script src="/scripts/autocomplete.js"></script>
-<script src="/scripts/cardsList.js"></script>
+<% if(currentUser && deck.author.id.equals(currentUser._id)){ %>
+	<script src="/scripts/autocomplete.js"></script>
+	<script>
+		$(document).ready(function(){
+			var data = {};
+			var url = "/autocomplete";
 
-<script>
-	autocomplete(document.getElementById("myInput"), cardsList);
-	//put ajax here
-</script>
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: data,
+				success: function(result){ 
+					autocomplete(document.getElementById("cardInput"), result);
+				},
+				error:function (jXHR, textStatus, errorThrown){
+					console.log(errorThrown);
+					console.log(textStatus);
+					console.log(jXHR);
+				},
+				dataType: "JSON"
+			});
+			
+			var input = document.getElementById("cardInput");
+			input.addEventListener("keyup", function(event) {
+			  if (event.keyCode === 13) {
+				event.preventDefault();
+				document.getElementById("submitBtn").click();
+			  }
+			});
+		});
+	</script>
+<% } %>
 
 <script>
 	function changeClass(btn){
@@ -109,11 +144,6 @@
 			buy.classList.add("faded");
 		}
 	}
-</script>
-
-<script>
-	var text = <%- JSON.stringify(deck.note) %>;
-	document.getElementById("textarea").innerHTML = text;
 </script>
 
 <% include ../partials/footer %>

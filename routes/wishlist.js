@@ -1,8 +1,6 @@
 var express = require("express");
 var router = express.Router();
 
-var objSort = require("../public/scripts/objSort");
-
 var User = require("../models/user"),
     Deck = require("../models/deck"),
 	Card = require("../models/card");
@@ -16,12 +14,13 @@ router.get("/wishlist", function(req, res){
 		if(err){
 			console.log(err);
 		} else {
-			Deck.find().populate("cardsWishlist").exec(function(err, allDecks){
+			Deck.find().populate("cardsWishlist").populate("cardsToBuy").exec(function(err, allDecks){
 				// add buylist cards here too!
 				if(err){
 					console.log(err);
 				} else {
 					var wishedCards = [];
+					var buyCards = [];
 					allDecks.forEach(function(deck){
 						for(var i = 0; i < deck.cardsWishlist.length; i++){
 							var wishedCard = {
@@ -33,8 +32,17 @@ router.get("/wishlist", function(req, res){
 							};
 							wishedCards.push(wishedCard);
 						}
+						for(var i = 0; i < deck.cardsToBuy.length; i++){
+							var cardToBuy = {
+								userName: deck.author.username,
+								cardName: deck.cardsWishlist[i].name,
+								cardImage: deck.cardsWishlist[i].image,
+								deck: deck._id
+							};
+							buyCards.push(cardToBuy);
+						}
 					});
-					res.render("wishlist/index", {cards: wishedCards, users: allUsers, page: page});
+					res.render("wishlist/index", {cards: wishedCards, buyCards: buyCards, users: allUsers, page: page});
 				}
 			});
 		}

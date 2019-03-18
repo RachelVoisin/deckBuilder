@@ -58,10 +58,12 @@
 						<input type="number" name="deck[basics][island]" value="<%= deck.basics.island %>" min="0" max="40" required />
 					</div>
 				</div>
-				<button class="ui red button" type="submit">Submit Changes</button>
+				<button class="ui blue basic button" type="submit">Submit Changes</button>
 				&nbsp&nbsp&nbsp&nbsp&nbsp <a href="/mtg/<%= deck._id %>">Back to Deck</a>
 			</form>	
-			<!-- DELETE BUTTON?? -->
+			<form class="top-pad" action="/mtg/<%= deck._id %>?_method=DELETE" method="POST">
+				<button class="ui red icon button"><i class="trash alternate icon"></i> Delete</button>
+			</form>
 		</div>
 	</div>
 </div>
