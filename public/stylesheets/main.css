@@ -1,11 +1,9 @@
 .container {
 	position: relative;
 }
-
 .center {
 	text-align: center;
 }
-
 #register-box {
 	width: 20vw;
 	position: absolute;
@@ -13,47 +11,40 @@
 	right: 0;
 	z-index: 999;
 }
-
 .top-pad {
 	padding-top: 1%;
 }
-
+.small-text{
+	font-size: 0.9em;
+}
 #login-btn {
 	border-radius: 7% 0 0 7%;
 }
-
 #normal-text {
 	font-weight: normal;
 	font-style: normal;
 }
-
 .faded {
 	opacity: 0.4;
 }
-
 #faded {
 	opacity: 0.4;
 }
-
 .cardIcon {
 	display: inline-block;
 	width: 1.5em;
 	text-align: center;
 }
-
 .cardName {
 	cursor: pointer;
 }
-
 .cardName:hover {
 	color: #c6c6c6;
 }
-
 .tooltip-container {
 	position: relative;
 	display: inline-block;
 }
-
 .img-tooltip {
 	height: 340px;
 	width: 244px;
@@ -63,16 +54,13 @@
 	z-index: 1;
 	visibility: hidden;
 }
-
 .tooltip-container:hover .img-tooltip {
 	visibility: visible;
 }
-
 .img-tooltip img {
 	height: 100%;
 	width: 100%;
 }
-
 .card-forms {
 	display: none;
 	height: 100vh;
@@ -84,7 +72,6 @@
 	background-color: rgb(0,0,0);
 	background-color: rgba(0,0,0,0.4);
 }
-
 .form-container, #passwordForm {
 	background-color: white;
 	background-color: rgba(255,255,255,0.95);
@@ -99,34 +86,28 @@
 	animation-duration: 0.4s;
 	text-align: center;
 }
-
 #passwordForm {
 	width: 25vw;
 }
-
 @keyframes animatetop {
 	from {top: -300px; opacity: 0}
 	to {top: 0; opacity: 1}
 }
-
 @-webkit-keyframes animatetop {
 	from {top: -300px; opacity: 0}
 	to {top: 0; opacity: 1}
 }
-
 .form-container img {
 	display: block;
 	margin: 0 auto;
 	height: 340px;
 	width: 244px;
 }
-
 .form-container form {
 	display: inline-block;
 	margin: 0 1em;
 	margin-top: 2em;
 }
-
 .img-tooltip::after {
 	content: " ";
 	position: absolute;
@@ -137,11 +118,9 @@
 	border-style: solid;
 	border-color: transparent black transparent transparent;
 }
-
 .autocomplete {
 	position: relative;
 }
-
 .autocomplete-items {
   position: absolute;
   border: 1px solid #d4d4d4;
@@ -152,7 +131,6 @@
   left: 0;
   right: 0;
 }
-
 .autocomplete-items div {
   padding: 10px;
   cursor: pointer;

@@ -83,6 +83,14 @@
 		<button class="ui teal button" type="submit">Submit</button> <a onClick="modal();">&nbsp;&nbsp;&nbsp;&nbsp; hide <i class="angle up icon"></i></a>
 	</form>
 </div>
+ 
+<% if(!currentUser){ %>
+<div class="ui right aligned basic segment">
+	<p class="small-text">
+		Try logging in with username: <b>Rachel</b> and password: <b>123</b> to explore complete functionality.
+	</p>
+</div>
+<% } %>
 
 <% if(error && error.length > 0){ %>
 	<div class="ui red segment" role="alert">

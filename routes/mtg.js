@@ -7,26 +7,12 @@ var numberToWords = require('number-to-words');
 var User = require("../models/user"),
     Deck = require("../models/deck"),
 	Card = require("../models/card"),
-	CardsArray = require("../models/cardsArray");
+	CardsArray = require("../models/cardsArray"),
+	Token = require("../models/token");
 
 var middleware = require("../middleware"); // contents of index.js is automatically required if you require a directory
 
 router.get("/autocomplete", function(req, res){
-	
-	/*
-	let cursor = Card.find({}).cursor();
-	cursor.addCursorFlag("noCursorTimeout", true);
-	var data = [];
-	
-	cursor.on('data', function(card) {
-		data.push(card.name);
-	});
-	cursor.on('close', function() {
-		cursor.close();
-		res.send(data);
-	});
-	*/
-
 	CardsArray.findOne({}, function(err, foundArray){
 		if(err){
 			console.log(err);
@@ -176,11 +162,9 @@ router.get("/mtg/new", middleware.isLoggedIn, function(req, res){
 router.post("/mtg", middleware.isLoggedIn, function(req, res){
 	var name = req.body.name;
 	var image = req.body.image;
-	
 	if(req.body.image == ''){
 		image = "/wireframe.png";
 	}
-	
 	var author = {
 		id: req.user._id,
 		username: req.user.username
@@ -234,7 +218,13 @@ router.get("/mtg/:id/edit", middleware.checkDeckOwnership, function(req, res){
 
 // Edit Deck Details
 router.put("/mtg/:id", middleware.checkDeckOwnership, function(req, res){
-	Deck.findByIdAndUpdate(req.params.id, req.body.deck, function(err, deck){
+	
+	var bodyDeck = req.body.deck;
+	if(bodyDeck.image == ''){
+		bodyDeck.image = "/wireframe.png";
+	}
+	
+	Deck.findByIdAndUpdate(req.params.id, bodyDeck, function(err, deck){
 		if(err){
 			req.flash("error", "Could not update deck");
 			console.log(err);
@@ -456,7 +446,10 @@ function renderCardList(req, res, render, sort = "type"){
 			console.log(err);
 			req.flash("error", "Could not find deck");
 			res.redirect("/mtg");
-		} else {
+		} else if(!foundDeck){
+			req.flash("error", "Could not find deck");
+			res.redirect("/mtg");
+		}else {
 			var typesOrdered = [];
 			var lengthsOrdered = [];
 			
@@ -600,18 +593,17 @@ function renderCardList(req, res, render, sort = "type"){
 			foundDeck.cards.forEach(function(card){
 				if(card.tokens.length != 0){
 					card.tokens.forEach(function(token){
-						tempTokens.push(token.name);
+						tempTokens.push(token.scryfallid);
 					});
 				} 
 			});
-			Card.find({ name: { $in: tempTokens}}, function(err, results){
+			Token.find({ scryfallid: { $in: tempTokens}}, function(err, results){
 				if(err){
 					console.log(err);
 				} else {
 					results.forEach(function(result){
 						deckTokens.push(result);
 					});
-					
 					res.render(render, {deck: foundDeck, cards: cards, page: page, types: typesOrdered, lengths: lengthsOrdered, sort: sort, tokens: deckTokens});	
 				}
 			});

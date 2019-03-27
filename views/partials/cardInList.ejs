@@ -16,7 +16,20 @@
 							
 		<div class="card-forms" id="forms_<%= card._id %>">
 			<div class="form-container">
-				<img src="<%= card.image %>" alt="<%= card.name %> image" />
+				<% if(!card.flip || card.flip == false){ %>
+					<img src="<%= card.image %>" alt="<%= card.name %> image" />
+				<% } else { %>
+					<div class="ui images">
+						<img src="<%= card.image %>" alt="<%= card.name %> image" />
+						<img src="<%= card.flipimage %>" alt="<%= card.name %> image" />
+					</div>
+				<% } %>
+				<% if(card.tokens.length > 0){ %>
+					<p>Associated Tokens:</p>
+					<% card.tokens.forEach(function(token){ %>
+						<p><%= token.name %></p>
+					<% }); %>
+				<% } %>
 				<form class="top-pad" action="/mtg/<%= deck._id %>/<%= card._id %>?_method=DELETE" method="POST">
 					<button class="ui red icon button"><i class="trash alternate icon"></i></button>
 				</form>

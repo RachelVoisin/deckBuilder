@@ -11,7 +11,9 @@ var cardSchema = new mongoose.Schema({
 	tokens: [{
 		name: String,
 		scryfallid: String
-	}]
+	}],
+	flip: Boolean,
+	flipimage: String
 });
 
 module.exports = mongoose.model("Card", cardSchema);
@@ -35,6 +37,7 @@ type_line (string)
 oracle_text 
 colors (array) // colors are single letters
 color_identity (array) // includes colors in activated abilities 
+card_faces (array of objects - includes name, image, ect)
 all_parts (array of objects - object:"related_card", component: "combo_piece" or "token", id, name, uri)
 legalities (object - standard, legacy, vintage, commander, ect. values "legal" or "not_legal"
 reserved (bool)
